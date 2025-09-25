@@ -20,11 +20,11 @@ typedef char MsgKind;
 #define AQ_NORMAL       0   // Message if of kind normal
 
 /* Error codes */
-#define AQ_UNINIT      -1   // Queue has not been initialized
-#define AQ_NULL_MSG    -2   // Sent message is NULL
-#define AQ_NO_MSG      -3   // No messages
-#define AQ_NO_ROOM     -4   // No room for message
-#define AQ_NOT_IMPL  -100   // Operation is not implemented
+#define AQ_UNINIT      (-1)   // Queue has not been initialized
+#define AQ_NULL_MSG    (-2)   // Sent message is NULL
+#define AQ_NO_MSG      (-3)   // No messages
+#define AQ_NO_ROOM     (-4)   // No room for message
+#define AQ_NOT_IMPL  (-100)   // Operation is not implemented
 
 typedef void * AlarmQueue;  // Opaque type 
 
