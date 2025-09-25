@@ -7,11 +7,11 @@
 
 #include "aq.h"
 
-AlarmQueue aq_create( ) {
+AlarmQueue aq_create() {
   return NULL;
 }
 
-int aq_send( AlarmQueue aq, void * msg, MsgKind k){
+int aq_send(AlarmQueue aq, void * msg, MsgKind k){
   return AQ_NOT_IMPL;
 }
 
