@@ -36,7 +36,6 @@ int main(int argc, char ** argv) {
 
   /* First received should be the alarm message */
   assert( get(q) == 3 );
-
   put_alarm (q, 6);
   put_normal(q, 7);
   assert( put_alarm (q, 8) == AQ_NO_ROOM );
