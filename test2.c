@@ -12,7 +12,7 @@
 /** 
  * Test with two competing producers?
  * Make test target using the following command:
- * make test TEST_FILE=test1.c 
+ * make test TEST_FILE=test2.c 
  */
 
 static AlarmQueue q;

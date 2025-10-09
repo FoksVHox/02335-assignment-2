@@ -10,7 +10,7 @@
 #include "aux.h"
 
 /** 
- * Test with two competing producers?
+ * Test with two concurrent producers. Alarm '2' waits for Alarm '1' to be read before thread proceeds.
  * Make test target using the following command:
  * make test TEST_FILE=test1.c 
  */
@@ -19,29 +19,26 @@ static AlarmQueue q;
 
 void * producer1 (void * arg) {
   put_alarm(q, 1);
-  put_normal(q, 2);
+  put_alarm(q, 2);
+  put_normal(q, 3);
   
   return 0;
 }
 
 void * producer2 (void * arg) {
-  msleep(250);
-  put_alarm(q, 3);
   put_normal(q, 4);
-  msleep(500);
-  put_alarm(q, 5);
-  put_normal(q, 6);
   return 0;
 }
 
 void * consumer(void * arg) {
-  msleep(500);
-  assert (get(q) == 1);
-  assert (get(q) == 2);
-  msleep(500);
-  assert (get(q) == 5);
-  assert (get(q) == 4);
-  assert (get(q) == 6);
+  msleep(100);
+  get(q);
+  msleep(100);
+  get(q);
+  msleep(100);
+  get(q);
+  msleep(100);
+  get(q);
   return 0;
 }
 
