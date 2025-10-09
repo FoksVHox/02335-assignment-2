@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <pthread.h>
+#include <assert.h>
 
 #include "aq.h"
 
@@ -26,17 +27,21 @@ void * producer1 (void * arg) {
 void * producer2 (void * arg) {
   msleep(250);
   put_alarm(q, 3);
+  put_normal(q, 4);
   msleep(500);
-  put_alarm(q, 4);
+  put_alarm(q, 5);
+  put_normal(q, 6);
   return 0;
 }
 
 void * consumer(void * arg) {
   msleep(500);
-  get(q);
-  get(q);
+  assert (get(q) == 1);
+  assert (get(q) == 2);
   msleep(500);
-  get(q);
+  assert (get(q) == 5);
+  assert (get(q) == 4);
+  assert (get(q) == 6);
   return 0;
 }
 
