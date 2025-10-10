@@ -43,14 +43,14 @@ lib: $(LIB_DIR)/$(LIB_NAME)
 $(LIB_DIR)/$(LIB_NAME): $(LIB_OBJECTS)
 	mkdir -p $(LIB_DIR)
 	ar -rcs $@ $^
-(
+
 $(LIB_DIR)/$(LIB_SEQ_NAME): $(LIB_SEQ_OBJECTS)
 	mkdir -p $(LIB_DIR)
 	ar -rcs $@ $^
 
 $(DEMO_EXECUTABLE): lib-seq $(DEMO_OBJECTS)
 	$(CC) $(CFLAGS) $(DEMO_OBJECTS) -L$(LIB_DIR) -l$(LIB_SEQ) -o $@ 
-)
+
 $(TEST_EXECUTABLE): lib $(TEST_OBJECTS)
 	$(CC) $(CFLAGS) $(TEST_OBJECTS) -lpthread -L$(LIB_DIR) -l$(LIB) -o $@ 
 

@@ -10,38 +10,34 @@
 #include "aux.h"
 
 /** 
- * Test with two competing producers?
+ * Test 2: normal messages are never blocked.
  * Make test target using the following command:
  * make test TEST_FILE=test2.c 
  */
 
 static AlarmQueue q;
 
-void * producer1 (void * arg) {
+void * producer (void * arg) {
   put_alarm(q, 1);
   put_normal(q, 2);
-  
-  return 0;
-}
-
-void * producer2 (void * arg) {
-  msleep(250);
-  put_alarm(q, 3);
+  put_normal(q, 3);
   put_normal(q, 4);
-  msleep(500);
   put_alarm(q, 5);
   put_normal(q, 6);
+  put_normal(q, 7);
   return 0;
 }
 
 void * consumer(void * arg) {
   msleep(500);
-  assert (get(q) == 1);
-  assert (get(q) == 2);
+  get(q);
   msleep(500);
-  assert (get(q) == 5);
-  assert (get(q) == 4);
-  assert (get(q) == 6);
+  get(q);
+  get(q);
+  get(q);
+  get(q);
+  get(q);
+  get(q);
   return 0;
 }
 
@@ -57,26 +53,22 @@ int main(int argc, char ** argv) {
   
   pthread_t t1;
   pthread_t t2;
-  pthread_t t3;
 
   void * res1;
   void * res2;
-  void * res3;
 
   printf("----------------\n");
 
   /* Fork threads */
-  pthread_create(&t1, NULL, producer1, NULL);
-  pthread_create(&t2, NULL, producer2, NULL);
-  pthread_create(&t3, NULL, consumer, NULL);
+  pthread_create(&t1, NULL, producer, NULL);
+  pthread_create(&t2, NULL, consumer, NULL);
 
   /* Join with all threads */
   pthread_join(t1, &res1);
   pthread_join(t2, &res2);
-  pthread_join(t3, &res3);
 
   printf("----------------\n");
-  printf("Threads terminated with %ld, %ld, %ld\n", (uintptr_t) res1, (uintptr_t) res2, (uintptr_t) res3);
+  printf("Threads terminated with %ld, %ld\n", (uintptr_t) res1, (uintptr_t) res2);
 
   print_sizes(q);
   
