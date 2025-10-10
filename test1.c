@@ -18,25 +18,22 @@ static AlarmQueue q;
 
 void * producer1 (void * arg) {
   put_alarm(q, 1);
-  put_alarm(q, 2);
-  put_normal(q, 3);
-  
+  put_normal(q, 2);
   return 0;
 }
 
 void * producer2 (void * arg) {
+  msleep(100);
+  put_alarm(q, 3);
   put_normal(q, 4);
   return 0;
 }
 
 void * consumer(void * arg) {
-  msleep(100);
+  msleep(500);
   get(q);
-  msleep(100);
   get(q);
-  msleep(100);
   get(q);
-  msleep(100);
   get(q);
   return 0;
 }
