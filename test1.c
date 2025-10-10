@@ -9,7 +9,7 @@
 #include "aux.h"
 
 /** 
- * Test with two concurrent producers. Alarm '2' waits for Alarm '1' to be read before thread proceeds.
+ * Test with two concurrent producers. Alarm '3' waits for Alarm '1' to be read before thread proceeds.
  * Make test target using the following command:
  * make test TEST_FILE=test1.c 
  */
@@ -32,6 +32,7 @@ void * producer2 (void * arg) {
 void * consumer(void * arg) {
   msleep(500);
   get(q);
+  msleep(100);
   get(q);
   get(q);
   get(q);
