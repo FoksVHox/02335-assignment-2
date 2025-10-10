@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <pthread.h>
-#include <assert.h>
 
 #include "aq.h"
 
